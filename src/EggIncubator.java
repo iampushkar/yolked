@@ -24,7 +24,7 @@ public class EggIncubator {
         while (true) {
             for (Egg egg : eggs) {
                 updateEgg(egg);
-                sleep(100);
+                sleep(120);
             }
         }
 
@@ -35,6 +35,7 @@ public class EggIncubator {
             egg.setProgress(egg.getProgress() + 1);
             if (egg.getProgress() >= 100) {
                 egg.setIncreasing(false);
+                fakeHatch(egg);
             }
         } else {
             egg.setProgress(egg.getProgress() - 1);
@@ -64,6 +65,19 @@ public class EggIncubator {
         int length = 20;
         int filled = progress * length / 100;
         return "[" + "#".repeat(filled) + "-".repeat(length - filled) + "]";
+    }
+
+    private void fakeHatch(Egg egg) {
+        System.out.print("\n✨ " + egg.getName() + " is hatching");
+        try {
+            for (int i = 0; i < 3; i++) {
+                System.out.print(".");
+                Thread.sleep(400);
+            }
+        } catch (InterruptedException ignored) {}
+
+        System.out.println(" Just kidding! Not today.\n");
+        egg.setProgress(98); // reset below 100
     }
 
     private String generateFunEggName(int i) {
